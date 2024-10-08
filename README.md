@@ -56,6 +56,8 @@ $ python3 main.py test_files/04_test_file-h2i.txt
 
 ### Question 7
 
+OK
+
 ```sh
 $ python3 main.py test_files/05_test_file-i2i.txt
 
@@ -66,8 +68,12 @@ $ python3 main.py test_files/05_test_file-i2i.txt
 ```sh
 $ python3 main.py test_files/06_test_file-chain.txt
 
-=> chain :
+=> chain of length 100: 1 ... 3560808
 ```
+
+### Question 8
+
+### Question 9
 
 ### Question 17
 

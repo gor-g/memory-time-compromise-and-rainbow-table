@@ -1,4 +1,5 @@
 import hashlib
+from random import randint
 
 class RainbowTable:
     def __init__(self) -> None:
@@ -62,7 +63,9 @@ class RainbowTable:
             
 
         elif self.commande == "chain":
-            pass
+            idx = int(self.arguments[1])
+            largeur = int(self.arguments[0])
+            print(f"chain of length {largeur}: {idx} ... {self.nouvelle_chaine(idx, largeur)}")
 
 
     def h(self, msg: str) -> bytes:
@@ -97,7 +100,7 @@ class RainbowTable:
 
 
     def nouvelle_chaine(self, idx1: int, largeur: int):
-        for i in range(1, largeur + 1):
+        for i in range(1, largeur):
             idx1 = self.i2i(idx1, i)
         return idx1
 
