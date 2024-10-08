@@ -59,7 +59,8 @@ $ python3 main.py test_files/04_test_file-h2i.txt
 ```sh
 $ python3 main.py test_files/05_test_file-i2i.txt
 
-=> i2i :
+=> 123 --i2c--> aaaet --h--> 54aa3686599e735f06269f56124aa4dba1847d04 --h2i(4)--> 1714296
+123  --i2i(4)-->  1714296
 ```
 
 ```sh
