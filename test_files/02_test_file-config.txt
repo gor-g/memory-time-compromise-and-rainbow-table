@@ -1,0 +1,4 @@
+SHA1
+abcdefghijklmnopqrstuvwxyz
+4
+config

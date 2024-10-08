@@ -1,0 +1,6 @@
+SHA1
+abcdefghijklmnopqrstuvwxyz
+5
+chain
+100
+1
