@@ -74,6 +74,15 @@ $ python3 main.py test_files/06_test_file-chain.txt
 ### Question 8
 
 ### Question 9
+```sh
+$ python3 main.py test_files/07_test_file-create.txt
+
+```
+
+### Question 10
+```sh
+$ python3 main.py test_files/08_test_file-info.txt
+```
 
 ### Question 17
 

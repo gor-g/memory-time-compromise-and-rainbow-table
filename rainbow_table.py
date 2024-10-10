@@ -9,6 +9,7 @@ class RainbowTable:
         self.commande: str
         self.arguments: list[str]
         self.N: int
+        self.rb_table = {}
 
     # def __str__(self) -> str:
     #     return f"fonction de hash = {self.fct_hachage}"
@@ -20,6 +21,7 @@ class RainbowTable:
     
 
     def load_file(self, filename: str):
+        """Instancie les variables de classe selon les informations contenues dans le fichier"""
         with open(filename, 'r') as file:
             lines = file.readlines()
 
@@ -34,6 +36,7 @@ class RainbowTable:
 
 
     def exec_file(self):
+        """fonction qui exécute la commande `self.commande`, après avoir instancié la classe `RainbowTable` en lisant le fichier d'entrée"""
         print(self)
 
         if self.commande == "hash":
@@ -66,6 +69,15 @@ class RainbowTable:
             idx = int(self.arguments[1])
             largeur = int(self.arguments[0])
             print(f"chain of length {largeur}: {idx} ... {self.nouvelle_chaine(idx, largeur)}")
+
+        elif self.commande == "create":
+            hauteur = int(self.arguments[0])
+            largeur = int(self.arguments[1])
+            fichier = self.arguments[2]
+            print(self.creer_table(largeur, hauteur))
+
+        elif self.commande == "info":
+            self.affiche_table()
 
 
     def h(self, msg: str) -> bytes:
@@ -104,6 +116,49 @@ class RainbowTable:
             idx1 = self.i2i(idx1, i)
         return idx1
 
+
+    def index_aleatoire(self):
+        return randint(0, self.N - 1)
+
+
+    def creer_table(self, largeur: int, hauteur: int):
+        table = []
+
+        for i in range(hauteur):
+            table.append(self.nouvelle_chaine(i, largeur))
+        
+        self.rb_table = dict(sorted(table, key=lambda value: value[1]))
+        return self.rb_table
+    
+
+    def sauve_table(self):
+        pass
+
+
+    def ouvre_table(self):
+        pass
+
+
+    def affiche_table(self):
+        res = self.__str__()
+        print(res)
+    
+
+    def recherche(self, table: list, hauteur: int, idx: int):
+        start = 0
+        end = self.N - 1
+
+        while start <= end:
+            middle = (start + end) // 2
+
+            if table[middle] < idx:
+                start = middle + 1
+            elif table[middle] > idx:
+                end = middle - 1
+            else:
+                return middle
+            
+        return None
 
 
     def print_help(self):
