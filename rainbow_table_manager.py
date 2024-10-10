@@ -2,6 +2,7 @@ import hashlib
 from random import randint
 from math import exp
 import pickle
+import time
 
 class RainbowTableManager:
     def __init__(self) -> None:
@@ -74,7 +75,12 @@ class RainbowTableManager:
             hauteur = int(self.arguments[0])
             largeur = int(self.arguments[1])
             fichier = self.arguments[2]
+
+            start = time.time()
             self.creer_table(largeur, hauteur)
+            end = time.time()
+            print(f"Temps de calcul de la table : {round(end - start, 3)}s")
+
             self.sauve_table(fichier)
 
         elif self.commande == "info":
@@ -87,7 +93,10 @@ class RainbowTableManager:
             fichier = self.arguments[1]
             self.ouvre_table(fichier)
 
+            start = time.time()
             print(f"l'inverse de {empreinte} est : ", self.inverse(self.largeur, int.from_bytes(bytes.fromhex(empreinte), "little").to_bytes(20, "little")))
+            end = time.time()
+            print(f"Temps de calcul de l'inverse : {round(end - start, 3)}s")
 
         elif self.commande == "stats":
             hauteur = int(self.arguments[0])
@@ -201,7 +210,13 @@ class RainbowTableManager:
             m = self.N * (1 - exp(-m / self.N))
         
         couverture = 100 * (1-v)
-        print(f"Couverture = {couverture}%")
+
+        print(f"Statistiques pour une table arc-en-ciel de hauteur de {hauteur} et une largeur de {largeur} : ")
+        print(f"Couverture de la table : {round(couverture, 2)} %")
+        # print(f"Taille de la table : {self.N * 4 * (1 + 5)}")
+        print(f"Taille de la table : {self.N * (20 + 4 * 20)}")
+        temps_hash = 3.60508e-07 # temps de hachage moyen calculé sur un échantillon de 76 hash
+        print(f"Temps de génération : {self.N * temps_hash} s")
 
 
     def affiche_table(self):

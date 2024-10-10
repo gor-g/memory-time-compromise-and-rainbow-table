@@ -102,6 +102,52 @@ $ python3 main.py test_files/10_test_file-stats.txt
 =>
 ```
 
+```sh
+$ python3 main.py test_files/11_test_file-stats.txt
+
+=>
+```
+
+### Question 14
+
+```sh
+$ python3 main.py test_files/14_test_file-stats.txt
+$ python3 main.py test_files/14_test_file-create.txt
+$ python3 main.py test_files/14_test_file-crack.txt
+```
+
+```sh
+=> l'inverse de 16de25af888480da1af57a71855f3e8c515dcb61 est :  CODE
+```
+- Paramètres
+    - Hauteur : 20000 
+    - Largeur : 200
+- Couverture de la table
+    - 96.7%
+- Temps de calcul de la table
+    - 3.911s
+- Taille de la table 
+    - 123 Ko
+- Temps de calcul de l'inverse
+    - 0.012s
+
+
+```sh
+=> l'inverse de dafaa5e15a30ecd52c2d1dc6d1a3d8a0633e67e2 est :  n00b.
+```
+- Paramètres
+    - Hauteur : 100000
+    - Largeur : 1000
+- Couverture de la table :
+    - 51.22 %
+- Temps de calcul de la table
+    - 110.204s
+- Taille de la table 
+    - 1.07 Mo
+- Temps de calcul de l'inverse
+    - 0.039s
+
+
 ### Question 17
 
 Le sel permet de, pour un mot de passe donné, hacher différemment celui-ci suivant la valeur du sel.

@@ -1,0 +1,7 @@
+SHA1
+abcdefghijklmnopqrstuvwxyz0123456789,;:$.
+5
+crack
+dafaa5e15a30ecd52c2d1dc6d1a3d8a0633e67e2
+table.rbt
+
