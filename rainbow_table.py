@@ -1,5 +1,6 @@
 import hashlib
 from random import randint
+import pickle
 
 class RainbowTable:
     def __init__(self) -> None:
@@ -9,7 +10,7 @@ class RainbowTable:
         self.commande: str
         self.arguments: list[str]
         self.N: int
-        self.rb_table = {}
+        self.table: dict[int, set[int]] = {}
 
     # def __str__(self) -> str:
     #     return f"fonction de hash = {self.fct_hachage}"
@@ -74,7 +75,8 @@ class RainbowTable:
             hauteur = int(self.arguments[0])
             largeur = int(self.arguments[1])
             fichier = self.arguments[2]
-            print(self.creer_table(largeur, hauteur))
+            self.creer_table(largeur, hauteur)
+            self.sauve_table(fichier)
 
         elif self.commande == "info":
             self.affiche_table()
@@ -92,11 +94,10 @@ class RainbowTable:
         res:str = ""
         base = len(self.alphabet)
         
-        while number > base:
-            quotient_entier = number // base
-            diff = number - quotient_entier * base
-            res = self.alphabet[diff] + res
-            number = quotient_entier
+        while number >= base:
+            rest = number%base
+            res = self.alphabet[rest] + res
+            number //= base
 
         res = self.alphabet[number] + res
 
@@ -122,25 +123,41 @@ class RainbowTable:
 
 
     def creer_table(self, largeur: int, hauteur: int):
-        table = []
+        self.table = dict()
 
         for i in range(hauteur):
-            table.append(self.nouvelle_chaine(i, largeur))
+            idx = self.index_aleatoire()
+            chaine = self.nouvelle_chaine(idx, largeur)
+            liste_chaines = self.table.get(chaine)
+            if liste_chaines:
+                liste_chaines.add(idx)
+            else:
+                self.table[chaine] = {idx}
         
-        self.rb_table = dict(sorted(table, key=lambda value: value[1]))
-        return self.rb_table
+        return self.table
     
 
-    def sauve_table(self):
-        pass
+    def sauve_table(self, filename: str):
+
+        with open(filename, 'wb') as f:
+            pickle.dump(self.table, f)
+
+        # with open(filename, 'w', encoding="UTF-8") as file:
+        #     file.write(str(self.table))
 
 
-    def ouvre_table(self):
-        pass
+    def ouvre_table(self, filename: str):
+        with open(filename, 'rb') as f:
+            self.table = pickle.load(f)
 
 
     def affiche_table(self):
         res = self.__str__()
+        for i in range(10):
+            res += str(self.table.get(i)) + "\n"
+        
+        for i in range(len(self.table) - 10, len(self.table)):
+            res += str(self.table.get(i)) + "\n"
         print(res)
     
 
