@@ -7,7 +7,7 @@
 [Lien du sujet](https://pierre-hyvernat.apps.math.cnrs.fr/data/Enseignement/2425/info002/tp1.html)
 
 Le TP a été codé en Python.
-Il utilise les bibliothèques [`hashlib`](https://docs.python.org/3/library/hashlib.html) et [`pickle`](https://docs.python.org/3/library/pickle.html), déjà incluse dans le langage standard.
+Il utilise les bibliothèques [`hashlib`](https://docs.python.org/3/library/hashlib.html) et [`pickle`](https://docs.python.org/3/library/pickle.html), déjà incluses dans le langage standard.
 
 ### Question 1
 
@@ -77,8 +77,29 @@ $ python3 main.py test_files/07_test_file-create.txt
 
 ### Question 10
 
+La méthode `sauve_table()` sérialise, dans un fichier .rbt, notre classe `RainbowTableManager`.
+La méthode `ouvre_table()` fait l'opération inverse.
+
 ```sh
 $ python3 main.py test_files/08_test_file-info.txt
+```
+
+### Question 11
+
+```sh
+$ python3 main.py test_files/09_test_file-crack.txt
+
+=> l'inverse de A5D7A3DE259AA726E565009E4364664E923102CB est :  TSS
+```
+
+### Question 12 (bonus)
+
+### Question 13
+
+```sh
+$ python3 main.py test_files/10_test_file-stats.txt
+
+=>
 ```
 
 ### Question 17

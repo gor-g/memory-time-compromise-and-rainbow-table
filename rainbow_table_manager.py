@@ -1,8 +1,9 @@
 import hashlib
 from random import randint
+from math import exp
 import pickle
 
-class RainbowTable:
+class RainbowTableManager:
     def __init__(self) -> None:
         self.fct_hachage: str
         self.alphabet: str
@@ -10,11 +11,9 @@ class RainbowTable:
         self.commande: str
         self.arguments: list[str]
         self.N: int
+        self.largeur: int
+        self.hauteur: int
         self.table: dict[int, set[int]] = {}
-
-    # def __str__(self) -> str:
-    #     return f"fonction de hash = {self.fct_hachage}"
-    
 
     def __str__(self) -> str:
         attributes = '\n'.join(f'{key} : {value}' for key, value in self.__dict__.items())
@@ -37,7 +36,7 @@ class RainbowTable:
 
 
     def exec_file(self):
-        """fonction qui exécute la commande `self.commande`, après avoir instancié la classe `RainbowTable` en lisant le fichier d'entrée"""
+        """fonction qui exécute la commande `self.commande`, après avoir instancié la classe `RainbowTableManager` en lisant le fichier d'entrée"""
         print(self)
 
         if self.commande == "hash":
@@ -79,7 +78,21 @@ class RainbowTable:
             self.sauve_table(fichier)
 
         elif self.commande == "info":
+            fichier = self.arguments[0]
+            self.ouvre_table(fichier)
             self.affiche_table()
+
+        elif self.commande == "crack":
+            empreinte = self.arguments[0]
+            fichier = self.arguments[1]
+            self.ouvre_table(fichier)
+
+            print(f"l'inverse de {empreinte} est : ", self.inverse(self.largeur, int.from_bytes(bytes.fromhex(empreinte), "little").to_bytes(20, "little")))
+
+        elif self.commande == "stats":
+            hauteur = int(self.arguments[0])
+            largeur = int(self.arguments[1])
+            self.affiche_stats(hauteur, largeur)
 
 
     def h(self, msg: str) -> bytes:
@@ -118,11 +131,36 @@ class RainbowTable:
         return idx1
 
 
+    def inverse(self, largeur:int, h:bytes):
+        for t in range(largeur-1, 0, -1):
+            idx = self.h2i(h, t)
+            for x in range(t + 1, largeur):
+                idx = self.i2i(idx, x)
+            x_set = self.table.get(idx)
+            if x_set:
+                for x in x_set:
+                    clair = self.verifie_candidat(h, t, x)
+                    if clair:
+                        return clair
+        return None
+
+
+    def verifie_candidat(self, h:bytes, t:int, idx:int):
+        for i in range(1, t):
+            idx = self.i2i(idx, i)
+
+        clair = self.i2c(idx)
+        if h == self.h(clair):
+            return clair
+        return None
+
     def index_aleatoire(self):
         return randint(0, self.N - 1)
 
 
     def creer_table(self, largeur: int, hauteur: int):
+        self.largeur = int(largeur)
+        self.hauteur = int(hauteur)
         self.table = dict()
 
         for i in range(hauteur):
@@ -140,43 +178,34 @@ class RainbowTable:
     def sauve_table(self, filename: str):
 
         with open(filename, 'wb') as f:
-            pickle.dump(self.table, f)
+            pickle.dump(self, f)
 
         # with open(filename, 'w', encoding="UTF-8") as file:
         #     file.write(str(self.table))
 
 
+    
     def ouvre_table(self, filename: str):
         with open(filename, 'rb') as f:
-            self.table = pickle.load(f)
+            new_self =  pickle.load(f)
+        for name, value in new_self.__dict__.items():
+            self.__setattr__(name, value)
+
+    
+    def affiche_stats(self, hauteur, largeur):
+        m = hauteur
+        v = 1.0
+
+        for i in range(largeur):
+            v = v * (1 - m / self.N)
+            m = self.N * (1 - exp(-m / self.N))
+        
+        couverture = 100 * (1-v)
+        print(f"Couverture = {couverture}%")
 
 
     def affiche_table(self):
-        res = self.__str__()
-        for i in range(10):
-            res += str(self.table.get(i)) + "\n"
-        
-        for i in range(len(self.table) - 10, len(self.table)):
-            res += str(self.table.get(i)) + "\n"
-        print(res)
-    
-
-    def recherche(self, table: list, hauteur: int, idx: int):
-        start = 0
-        end = self.N - 1
-
-        while start <= end:
-            middle = (start + end) // 2
-
-            if table[middle] < idx:
-                start = middle + 1
-            elif table[middle] > idx:
-                end = middle - 1
-            else:
-                return middle
-            
-        return None
-
+        print(self)
 
     def print_help(self):
         help = """using with test file: python3 main.py <TESTFILE>
