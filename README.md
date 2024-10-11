@@ -175,6 +175,7 @@ Pour les deux prochaines empreintes, on réalise les estimations suivantes :
     - 247.478 s
 
 ### Question 15
+Avec une table arc-en-ciel de hauteur de 100000000 et une largeur de 1000000, on obtient une couverture de 99.71 %.
 
 ### Question 17
 
