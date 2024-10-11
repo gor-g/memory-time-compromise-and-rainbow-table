@@ -69,7 +69,10 @@ class RainbowTableManager:
         elif self.commande == "chain":
             idx = int(self.arguments[1])
             largeur = int(self.arguments[0])
+            start = time.time()
             print(f"chain of length {largeur}: {idx} ... {self.nouvelle_chaine(idx, largeur)}")
+            end = time.time()
+            print(f"Temps d'exécution de la fonction nouvelle_chaine({idx}, {largeur}) : {round(end - start, 4)} s")
 
         elif self.commande == "create":
             hauteur = int(self.arguments[0])
@@ -213,10 +216,11 @@ class RainbowTableManager:
 
         print(f"Statistiques pour une table arc-en-ciel de hauteur de {hauteur} et une largeur de {largeur} : ")
         print(f"Couverture de la table : {round(couverture, 2)} %")
-        # print(f"Taille de la table : {self.N * 4 * (1 + 5)}")
-        print(f"Taille de la table : {self.N * (20 + 4 * 20)}")
-        temps_hash = 3.60508e-07 # temps de hachage moyen calculé sur un échantillon de 76 hash
-        print(f"Temps de génération : {self.N * temps_hash} s")
+        temps_nouvelle_chaine = 0.00111 # sur une moyenne de 10000 appels à nouvelle_chaine
+        print(f"Temps de génération : {round(hauteur * temps_nouvelle_chaine, 3)} s")
+        print(f"Taille de la table : {self.N * (20 + 4 * 20)}") # une empreinte = 20 octets
+        temps_i2i = 4.124641418457031e-05
+        print(f"Temps de calcul : {round(temps_i2i * hauteur, 3)} s") # temps moyen d'un appel i2i * hauteur de la table
 
 
     def affiche_table(self):

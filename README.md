@@ -147,6 +147,34 @@ $ python3 main.py test_files/14_test_file-crack.txt
 - Temps de calcul de l'inverse
     - 0.039s
 
+Pour les deux prochaines empreintes, on réalise les estimations suivantes :
+1. 15D136678A15DDD27378777E220F501F2A729B36
+- Paramètres
+    - Hauteur : 1000000
+    - Largeur : 10000
+- Couverture de la table :
+    - 79.73 %
+- Temps de calcul de la table
+    - 1110.0 s
+- Taille de la table 
+    - .
+- Temps de calcul de l'inverse
+    - 41.246 s
+
+2. C50DAD1BA2A108B04AF45EBDB810ACBC78E44BFE
+- Paramètres
+    - Hauteur : 6000000
+    - Largeur : 60000
+- Couverture de la table :
+    - 77.73 %
+- Temps de calcul de la table
+    - 6660.0 s
+- Taille de la table 
+    - .
+- Temps de calcul de l'inverse
+    - 247.478 s
+
+### Question 15
 
 ### Question 17
 
