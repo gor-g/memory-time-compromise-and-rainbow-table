@@ -43,7 +43,7 @@ class RainbowTableManager:
         if self.commande == "hash":
             if self.fct_hachage == "SHA1":
                 msg = self.arguments[0]
-                print(self.h(msg).upper(), f"({msg})")
+                print(self.h(msg).hex().upper(), f"({msg})")
 
         elif self.commande == "i2c":
             print(f"i2c({self.arguments[0]}) : {self.i2c(int(self.arguments[0]))}")

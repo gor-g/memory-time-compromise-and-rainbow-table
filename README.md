@@ -21,6 +21,18 @@ OK
 
 OK
 
+```sh
+$ python3 main.py test_files/01_test_file-hash.txt
+
+fct_hachage : SHA1
+alphabet : abcdefghijklmnopqrstuvwxyz
+taille : 4
+commande : hash
+arguments : ['Salut']
+N : 456976
+9F57098C5534762DD32802302DB78ADA1BA864F5 (Salut)
+```
+
 ### Question 4
 
 OK
@@ -99,13 +111,21 @@ $ python3 main.py test_files/09_test_file-crack.txt
 ```sh
 $ python3 main.py test_files/10_test_file-stats.txt
 
-=>
+=> Statistiques pour une table arc-en-ciel de hauteur de 200 et une largeur de 300 :
+Couverture de la table : 86.49 %
+Temps de génération : 0.222 s
+Taille de la table : 1757600
+Temps de calcul : 0.008 s
 ```
 
 ```sh
 $ python3 main.py test_files/11_test_file-stats.txt
 
-=>
+=> Statistiques pour une table arc-en-ciel de hauteur de 300000 et une largeur de 3000 :
+Couverture de la table : 96.57 %
+Temps de génération : 333.0 s
+Taille de la table : 10240000000
+Temps de calcul : 12.374 s
 ```
 
 ### Question 14
