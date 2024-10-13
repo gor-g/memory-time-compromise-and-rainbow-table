@@ -3,6 +3,7 @@ from random import randint
 from math import exp
 import pickle
 import time
+import sys
 
 
 class RainbowTableManager:
@@ -206,7 +207,7 @@ class RainbowTableManager:
         for name, value in new_self.__dict__.items():
             self.__setattr__(name, value)
 
-    def compute_generation_time(self, hauteur: int, largeur: int):
+    def estimate_generation_time(self, hauteur: int, largeur: int):
         mini_hauteur = 20
         mini_self = self.copy(ignore_table=True)
         mini_self.init_table(mini_hauteur, largeur)
@@ -214,6 +215,37 @@ class RainbowTableManager:
         mini_self.fill_table(mini_hauteur, largeur)
         t = time.time()-start
         return (hauteur * t/mini_hauteur)
+    
+
+    def generate_dummy_table(self, hauteur: int):
+        dummy_table = dict()
+        actual_hauteur = min(500000, hauteur)
+        for _ in range(actual_hauteur):
+            idx = randint(0, self.N - 1)
+            chaine = randint(0, self.N - 1)
+            liste_chaines = dummy_table.get(chaine)
+            if liste_chaines:
+                liste_chaines.add(idx)
+            else:
+                dummy_table[chaine] = {idx}
+        return dummy_table, actual_hauteur
+
+    def estimate_size(self, hauteur: int, largeur: int):
+        dummy_table, actual_hauteur = self.generate_dummy_table(hauteur)
+        return int(sys.getsizeof(dummy_table)/actual_hauteur * hauteur)
+
+    def estimate_search_time(self, hauteur: int, largeur: int):
+        sample_size = 1000
+        dummy_table, actual_hauteur = self.generate_dummy_table(hauteur)
+        total = 0
+        for _ in range(sample_size):
+            y = randint(0, self.N - 1)
+            s = time.time()
+            dummy_table.get(y)
+            e = time.time()
+            total += (e-s)
+        return total/sample_size
+
 
     def affiche_stats(self, hauteur: int, largeur: int):
         m = hauteur
@@ -229,8 +261,10 @@ class RainbowTableManager:
         print(f"Couverture de la table : {round(couverture, 2)} %")
         temps_nouvelle_chaine = 0.00111 # sur une moyenne de 10000 appels à nouvelle_chaine
         print(f"Temps de génération : {round(hauteur * temps_nouvelle_chaine, 3)} s")
-        print(f"Taille de la table : {self.N * (20 + 4 * 20)}") # une empreinte = 20 octets
-        print(f"Temps de création estimé : {round(self.compute_generation_time(hauteur, largeur), 3)} s")
+        print(f"Temps de création estimé : {round(self.estimate_generation_time(hauteur, largeur), 3)} s")
+        print(f"Taille de la table estimée : {self.estimate_size(hauteur, largeur)} bytes") # une empreinte = 20 octets
+        print(f"Temps de recherche estimé : {self.estimate_search_time(hauteur, largeur)} s")
+
 
 
     def affiche_table(self):
