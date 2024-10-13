@@ -259,8 +259,6 @@ class RainbowTableManager:
 
         print(f"Statistiques pour une table arc-en-ciel de hauteur de {hauteur} et une largeur de {largeur} : ")
         print(f"Couverture de la table : {round(couverture, 2)} %")
-        temps_nouvelle_chaine = 0.00111 # sur une moyenne de 10000 appels à nouvelle_chaine
-        print(f"Temps de génération : {round(hauteur * temps_nouvelle_chaine, 3)} s")
         print(f"Temps de création estimé : {round(self.estimate_generation_time(hauteur, largeur), 3)} s")
         print(f"Taille de la table estimée : {self.estimate_size(hauteur, largeur)} bytes") # une empreinte = 20 octets
         print(f"Temps de recherche estimé : {self.estimate_search_time(hauteur, largeur)} s")
