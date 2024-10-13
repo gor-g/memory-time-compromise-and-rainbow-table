@@ -128,14 +128,16 @@ La complexité moyenne de la recherche dans les tables de hachage est de $O(1)$
 
 ### Question 13
 
+Pour faire l'estimation de la taille et de recherche on utilise des dictionnaires crées aléatoirement au lieu de dictionnaires crées avec des appelles de nouvelle chaine.
+
 ```sh
 $ python3 main.py test_files/10_test_file-stats.txt
 
 => Statistiques pour une table arc-en-ciel de hauteur de 200 et une largeur de 300 :
 Couverture de la table : 86.49 %
-Temps de génération : 0.222 s
-Taille de la table : 1757600
-Temps de calcul : 0.1 s
+Temps de création estimé : 0.101 s
+Taille de la table estimée : 9304 bytes
+Temps de recherche estimé : 1.3310909271240235e-06 s
 ```
 
 ```sh
@@ -143,9 +145,9 @@ $ python3 main.py test_files/11_test_file-stats.txt
 
 => Statistiques pour une table arc-en-ciel de hauteur de 300000 et une largeur de 3000 :
 Couverture de la table : 96.57 %
-Temps de génération : 333.0 s
-Taille de la table : 10240000000
-Temps de création : 1848.965 s
+Temps de création estimé : 1701.264 s
+Taille de la table estimée : 10485848 bytes
+Temps de recherche estimé : 1.4820098876953125e-06 s
 ```
 
 ### Question 14
