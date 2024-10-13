@@ -4,6 +4,7 @@ from math import exp
 import pickle
 import time
 
+
 class RainbowTableManager:
     def __init__(self) -> None:
         self.fct_hachage: str
@@ -80,7 +81,7 @@ class RainbowTableManager:
             fichier = self.arguments[2]
 
             start = time.time()
-            self.creer_table(largeur, hauteur)
+            self.creer_table(hauteur, largeur)
             end = time.time()
             print(f"Temps de calcul de la table : {round(end - start, 3)}s")
 
@@ -170,12 +171,13 @@ class RainbowTableManager:
         return randint(0, self.N - 1)
 
 
-    def creer_table(self, largeur: int, hauteur: int):
+    def init_table(self, hauteur: int, largeur: int ):
         self.largeur = int(largeur)
         self.hauteur = int(hauteur)
         self.table = dict()
 
-        for i in range(hauteur):
+    def fill_table(self, hauteur: int, largeur: int):
+        for _ in range(hauteur):
             idx = self.index_aleatoire()
             chaine = self.nouvelle_chaine(idx, largeur)
             liste_chaines = self.table.get(chaine)
@@ -184,16 +186,17 @@ class RainbowTableManager:
             else:
                 self.table[chaine] = {idx}
         
+
+    def creer_table(self, hauteur: int, largeur: int):
+        self.init_table(hauteur, largeur)
+        self.fill_table(hauteur, largeur)
         return self.table
     
 
     def sauve_table(self, filename: str):
-
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
 
-        # with open(filename, 'w', encoding="UTF-8") as file:
-        #     file.write(str(self.table))
 
 
     
@@ -203,8 +206,16 @@ class RainbowTableManager:
         for name, value in new_self.__dict__.items():
             self.__setattr__(name, value)
 
-    
-    def affiche_stats(self, hauteur, largeur):
+    def compute_generation_time(self, hauteur: int, largeur: int):
+        mini_hauteur = 20
+        mini_self = self.copy(ignore_table=True)
+        mini_self.init_table(mini_hauteur, largeur)
+        start = time.time()
+        mini_self.fill_table(mini_hauteur, largeur)
+        t = time.time()-start
+        return (hauteur * t/mini_hauteur)
+
+    def affiche_stats(self, hauteur: int, largeur: int):
         m = hauteur
         v = 1.0
 
@@ -219,12 +230,22 @@ class RainbowTableManager:
         temps_nouvelle_chaine = 0.00111 # sur une moyenne de 10000 appels à nouvelle_chaine
         print(f"Temps de génération : {round(hauteur * temps_nouvelle_chaine, 3)} s")
         print(f"Taille de la table : {self.N * (20 + 4 * 20)}") # une empreinte = 20 octets
-        temps_i2i = 4.124641418457031e-05
-        print(f"Temps de calcul : {round(temps_i2i * hauteur, 3)} s") # temps moyen d'un appel i2i * hauteur de la table
+        print(f"Temps de création estimé : {round(self.compute_generation_time(hauteur, largeur), 3)} s")
 
 
     def affiche_table(self):
         print(self)
+
+    def copy(self, ignore_table = False):
+        new_obj = self.__class__()
+        if not ignore_table:
+            for name, value in self.__dict__.items():
+                if name != "table":
+                    new_obj.__setattr__(name, value)
+        else:
+            for name, value in self.__dict__.items():
+                new_obj.__setattr__(name, value)
+        return new_obj
 
     def print_help(self):
         help = """using with test file: python3 main.py <TESTFILE>

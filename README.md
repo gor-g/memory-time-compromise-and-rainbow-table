@@ -45,6 +45,24 @@ $ python3 main.py test_files/03_test_file-i2c.txt
 
 ### Question 5 (bonus)
 
+_Quelle est la complexité (en temps et en espace) de recherche dans une telle table si la table initiale contenait hauteur lignes et largeur colonnes ?_
+
+En notant $l$ la largeur et $h$ la hauteur de la table on a la complexité en calcule $C$:
+
+$$C(h,l) =  \sum_{t=1}^l \sum_{i=t+1}^{l}O(log(h)) = O(log(h)) \sum_{t=1}^l \sum_{i=t+1}^{l}1 = O(log(h))\sum_{t=1}^l \big(\sum_{i=1}^l 1 - \sum_{i=1}^{t} 1\big) =  O(log(h))\big(l\times l- \sum_{t=1}^l t\big) $$
+
+$$ C(h,l) = O(log(h))\frac{2l^2 - l^2 + l }{2} = O\big(log(h)l^2\big) $$
+
+la complexité en mémoire est de $O(2h) = O(h)$
+
+_Comparez cela avec les complexités (en temps et en espace) de la recherche exhaustive et celle du précalcul complet ?_
+
+En notant $n$ la taille de l'alphabet et et $m$ la longeur du mot de passe :
+
+Pour la recherche exhaustive on a une complexité en temps de calcule $O(n^m)$ et complexité en mémoire de $O(1)$
+
+Pour la recherche avec la table précalculée on a une complexité en temps de calcule $O(log(n^m))$ et complexité en mémoire de $O(n^m)$
+
 ### Question 6
 
 OK
@@ -106,6 +124,8 @@ $ python3 main.py test_files/09_test_file-crack.txt
 
 ### Question 12 (bonus)
 
+La complexité moyenne de la recherche dans les tables de hachage est de $O(1)$
+
 ### Question 13
 
 ```sh
@@ -115,7 +135,7 @@ $ python3 main.py test_files/10_test_file-stats.txt
 Couverture de la table : 86.49 %
 Temps de génération : 0.222 s
 Taille de la table : 1757600
-Temps de calcul : 0.008 s
+Temps de calcul : 0.1 s
 ```
 
 ```sh
@@ -125,7 +145,7 @@ $ python3 main.py test_files/11_test_file-stats.txt
 Couverture de la table : 96.57 %
 Temps de génération : 333.0 s
 Taille de la table : 10240000000
-Temps de calcul : 12.374 s
+Temps de création : 1848.965 s
 ```
 
 ### Question 14
@@ -139,62 +159,67 @@ $ python3 main.py test_files/14_test_file-crack.txt
 ```sh
 => l'inverse de 16de25af888480da1af57a71855f3e8c515dcb61 est :  CODE
 ```
-- Paramètres
-    - Hauteur : 20000 
-    - Largeur : 200
-- Couverture de la table
-    - 96.7%
-- Temps de calcul de la table
-    - 3.911s
-- Taille de la table 
-    - 123 Ko
-- Temps de calcul de l'inverse
-    - 0.012s
 
+- Paramètres
+  - Hauteur : 20000
+  - Largeur : 200
+- Couverture de la table
+  - 96.7%
+- Temps de calcul de la table
+  - 3.911s
+- Taille de la table
+  - 123 Ko
+- Temps de calcul de l'inverse
+  - 0.012s
 
 ```sh
 => l'inverse de dafaa5e15a30ecd52c2d1dc6d1a3d8a0633e67e2 est :  n00b.
 ```
+
 - Paramètres
-    - Hauteur : 100000
-    - Largeur : 1000
+  - Hauteur : 100000
+  - Largeur : 1000
 - Couverture de la table :
-    - 51.22 %
+  - 51.22 %
 - Temps de calcul de la table
-    - 110.204s
-- Taille de la table 
-    - 1.07 Mo
+  - 110.204s
+- Taille de la table
+  - 1.07 Mo
 - Temps de calcul de l'inverse
-    - 0.039s
+  - 0.039s
 
 Pour les deux prochaines empreintes, on réalise les estimations suivantes :
+
 1. 15D136678A15DDD27378777E220F501F2A729B36
+
 - Paramètres
-    - Hauteur : 1000000
-    - Largeur : 10000
+  - Hauteur : 1000000
+  - Largeur : 10000
 - Couverture de la table :
-    - 79.73 %
+  - 79.73 %
 - Temps de calcul de la table
-    - 1110.0 s
-- Taille de la table 
-    - .
+  - 1110.0 s
+- Taille de la table
+  - .
 - Temps de calcul de l'inverse
-    - 41.246 s
+  - 41.246 s
 
 2. C50DAD1BA2A108B04AF45EBDB810ACBC78E44BFE
+
 - Paramètres
-    - Hauteur : 6000000
-    - Largeur : 60000
+  - Hauteur : 6000000
+  - Largeur : 60000
 - Couverture de la table :
-    - 77.73 %
+  - 77.73 %
 - Temps de calcul de la table
-    - 6660.0 s
-- Taille de la table 
-    - .
+  - 6660.0 s
+- Taille de la table
+  - .
 - Temps de calcul de l'inverse
-    - 247.478 s
+  - 247.478 s
 
 ### Question 15
+
 Avec une table arc-en-ciel de hauteur de 100000000 et une largeur de 1000000, on obtient une couverture de 99.71 %.
 
 ### Question 17
